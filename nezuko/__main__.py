@@ -71,55 +71,55 @@ async def start_bot():
     print("+===============+===============+===============+===============+")
     print(bot_modules)
     print("+===============+===============+===============+===============+")
-    print(f"[INFO]: BOT STARTED AS {BOT_NAME}!")
+    print(f"[INFO]: بدأ BOT AS {BOT_NAME}!")
 
     restart_data = await clean_restart_stage()
 
     try:
-        print("[INFO]: SENDING ONLINE STATUS")
+        print("[INFO]: إرسال الحالة عبر الإنترنت")
         if restart_data:
             await app.edit_message_text(
                 restart_data["chat_id"],
                 restart_data["message_id"],
-                "**Restarted Successfully**",
+                "**تمت إعادة التشغيل بنجاح**",
             )
 
         else:
-            await app.send_message(LOG_GROUP_ID, "Bot started!")
+            await app.send_message(LOG_GROUP_ID, "بدأ البوت!")
     except Exception:
         pass
 
     await idle()
 
     await aiohttpsession.close()
-    print("[INFO]: CLOSING AIOHTTP SESSION AND STOPPING BOT")
+    print("[INFO]: إغلاق جلسة AIOHTTP و إيقاف تشغيل BOT")
     await app.stop()
     print("[INFO]: Bye!")
     for task in asyncio.all_tasks():
         task.cancel()
-    print("[INFO]: Turned off!")
+    print("[INFO]: أطفئ!")
 
 
 home_keyboard_pm = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton(
-                text="Commands ❓", callback_data="bot_commands"
+                text="‹ الاوامر ›", callback_data="bot_commands"
             ),
             InlineKeyboardButton(
-                text="Repo ❤️",
-                url="https://github.com/rozari0/NezukoBot",
+                text="‹ سورس سبارك ›",
+                url="https://t.me/ZZZ7iZ",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="System Stats 🖥",
+                text="‹ احصائيات النظام ›",
                 callback_data="stats_callback",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="Add Me To Your Group⚡",
+                text="‹ اضفني الى مجموعتك ›",
                 url=f"http://t.me/{BOT_USERNAME}?startgroup=new",
             )
         ],
@@ -127,9 +127,9 @@ home_keyboard_pm = InlineKeyboardMarkup(
 )
 
 home_text_pm = (
-    f"Hey there! My name is {BOT_NAME}. I can manage your "
-    + "group with lots of useful features, feel free to "
-    + "add me to your group."
+    f"اهلا بك صديقي، انا بوت اسمي {BOT_NAME}. يمكنني إدارة مجموعتك "
+    + "بالعديد من الميزات المفيدة"
+    + "، فلا تتردد في إضافتي إلى مجموعتك."
 )
 
 
@@ -137,17 +137,17 @@ keyboard = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton(
-                text="Help ❓",
+                text="‹ مساعده ›",
                 url=f"t.me/{BOT_USERNAME}?start=help",
             ),
             InlineKeyboardButton(
-                text="Repo 🛠",
-                url="https://github.com/rozari0/NezukoBot",
+                text="‹ سورس سبارك ›",
+                url="https://t.me/ZZZ7iZ",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="System Stats 💻",
+                text="‹ احصائيات النظام ›",
                 callback_data="stats_callback",
             ),
         ],
@@ -159,8 +159,8 @@ keyboard = InlineKeyboardMarkup(
 async def start(_, message):
     if message.chat.type != enums.ChatType.PRIVATE:
         return await message.reply_photo(
-            photo="https://cdn.awwni.me/2gj9h.jpg",
-            caption="Pm Me For More Details.",
+            photo="https://telegra.ph/file/cc28562af5c8d6f15b1d3.jpg",
+            caption="اPm Me المزيد من التفاصيل.",
             reply_markup=keyboard,
         )
     if len(message.text.split()) > 1:
@@ -172,7 +172,7 @@ async def start(_, message):
         elif "_" in name:
             module = name.split("_", 1)[1]
             text = (
-                f"Here is the help for **{HELPABLE[module].__MODULE__}**:\n"
+                f"هنا هو المساعدة ل **{HELPABLE[module].__MODULE__}**:\n"
                 + HELPABLE[module].__HELP__
             )
             await message.reply(text, disable_web_page_preview=True)
@@ -184,7 +184,7 @@ async def start(_, message):
             )
     else:
         await message.reply_photo(
-            photo="https://cdn.awwni.me/2gj9h.jpg",
+            photo="https://telegra.ph/file/cc28562af5c8d6f15b1d3.jpg",
             caption=home_text_pm,
             reply_markup=home_keyboard_pm,
         )
@@ -201,29 +201,29 @@ async def help_command(_, message):
                     [
                         [
                             InlineKeyboardButton(
-                                text="Click here",
+                                text="‹ انقر هنا ›",
                                 url=f"t.me/{BOT_USERNAME}?start=help_{name}",
                             )
                         ],
                     ]
                 )
                 await message.reply(
-                    f"Click on the below button to get help about {name}",
+                    f"انقر على الزر أدناه للحصول على مساعدة حول {name}",
                     reply_markup=key,
                 )
             else:
                 await message.reply(
-                    "PM Me For More Details.", reply_markup=keyboard
+                    "PM Me لمزيد من التفاصيل.", reply_markup=keyboard
                 )
         else:
             await message.reply(
-                "Pm Me For More Details.", reply_markup=keyboard
+                "PM Me لمزيد من التفاصيل.", reply_markup=keyboard
             )
     elif len(message.command) >= 2:
         name = (message.text.split(None, 1)[1]).lower()
         if str(name) in HELPABLE:
             text = (
-                f"Here is the help for **{HELPABLE[name].__MODULE__}**:\n"
+                f"هنا هو المساعدة ل **{HELPABLE[name].__MODULE__}**:\n"
                 + HELPABLE[name].__HELP__
             )
             await message.reply(text, disable_web_page_preview=True)
@@ -248,10 +248,15 @@ async def help_parser(name, keyboard=None):
     if not keyboard:
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
     return (
-        """Hello {first_name}, My name is {bot_name}.
-I'm a group management bot with some useful features.
-You can choose an option below, by clicking a button.
-Also you can ask anything in Support Group.
+        """مرحبًا {first_name} ، اسمي {bot_name}.
+
+أنا روبوت إدارة المجموعة مع بعض الميزات المفيدة.
+
+يمكنك اختيار خيار أدناه ، عن طريق النقر على زر.
+
+كما يمكنك أن تسأل أي شيء بالضغط في الاسفل
+
+[𝙎𝙊𝙐𝙍𝘾𝙀 𝙎𝙋𝘼𝙍𝙆](https://t.me/ZZZ7iZ).
 """.format(
             first_name=name,
             bot_name=BOT_NAME,
@@ -287,20 +292,22 @@ async def help_button(client, query):
     back_match = re.match(r"help_back", query.data)
     create_match = re.match(r"help_create", query.data)
     top_text = f"""
-Hello {query.from_user.first_name}, My name is {BOT_NAME}.
-I'm a group management bot with some usefule features.
-You can choose an option below, by clicking a button.
-Also you can ask anything in Support Group.
+اهلا {query.from_user.first_name}, انا بوت اسمي {BOT_NAME}.
+أنا روبوت إدارة المجموعة مع بعض ميزات الاستخدام.
 
-General command are:
- - /start: Start the bot
- - /help: Give this message
+يمكنك اختيار خيار أدناه ، عن طريق النقر على زر.
+
+كما يمكنك أن تسأل أي شيء في مجموعة الدعم..
+
+اضغط اذا كنت تحتاج للمساعده :
+ - /start: لاعادة تشغيل البوت 
+ - /help: للحصول على الاوامر
  """
     if mod_match:
         module = mod_match.group(1)
         text = (
             "{} **{}**:\n".format(
-                "Here is the help for", HELPABLE[module].__MODULE__
+                "هنا هو المساعدة ل", HELPABLE[module].__MODULE__
             )
             + HELPABLE[module].__HELP__
         )
@@ -308,7 +315,7 @@ General command are:
         await query.message.edit(
             text=text,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("back", callback_data="help_back")]]
+                [[InlineKeyboardButton("‹ رجوع ›", callback_data="help_back")]]
             ),
             disable_web_page_preview=True,
         )
