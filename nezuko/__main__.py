@@ -256,7 +256,7 @@ async def help_parser(name, keyboard=None):
 
 كما يمكنك أن تسأل أي شيء بالضغط في الاسفل
 
-[𝙎𝙊𝙐𝙍𝘾𝙀 𝙎𝙋𝘼𝙍𝙆](https://t.me/ZZZ7iZ).
+[𝙎𝙊𝙐𝙍𝘾𝙀 𝙎𝙋𝘼𝙍𝙆](t.me/ZZZ7iZ).
 """.format(
             first_name=name,
             bot_name=BOT_NAME,
