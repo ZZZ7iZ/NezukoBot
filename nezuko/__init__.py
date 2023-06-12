@@ -47,14 +47,14 @@ MOD_NOLOAD = []
 bot_start_time = time.time()
 
 # MongoDB client
-print("[INFO]: INITIALIZING DATABASE")
+print("[INFO]: تهيئة قاعدة البيانات")
 mongo_client = MongoClient(MONGO_URL)
 db = mongo_client.nezuko
 
 
 async def load_sudoers():
     global SUDOERS
-    print("[INFO]: LOADING SUDOERS")
+    print("[INFO]: تهيئة قاعدة البيانات")
     sudoersdb = db.sudoers
     sudoers = await sudoersdb.find_one({"sudo": "sudo"})
     sudoers = [] if not sudoers else sudoers["sudoers"]
@@ -67,7 +67,7 @@ async def load_sudoers():
                 upsert=True,
             )
     SUDOERS = (SUDOERS + sudoers) if sudoers else SUDOERS
-    print("[INFO]: LOADED SUDOERS")
+    print("[INFO]: صخور محملة")
 
 
 loop = asyncio.get_event_loop()
@@ -79,10 +79,10 @@ arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 app = Client("nezuko", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
-print("[INFO]: STARTING BOT CLIENT")
+print("[INFO]: بدء العميل البوت")
 app.start()
 
-print("[INFO]: GATHERING PROFILE INFO")
+print("[INFO]: جمع معلومات الملف الشخصي")
 x = app.get_me()
 
 
